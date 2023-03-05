@@ -36,6 +36,7 @@ jobs:
         run: rm -rf build && mkdir build && cd build
 
       - name: Build
+        working-directory: ${{github.workspace}}/build
         # Build your program with the given configuration
         run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../tdlib .. && cmake --build . --target install
 
