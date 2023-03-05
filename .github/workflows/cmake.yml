@@ -18,24 +18,30 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: echo path
-      run: pwd && ls -al ./
-      
-    - name: sudo apt-get update
-      run: sudo apt-get update && sudo apt-get upgrade && sudo apt-get install make git zlib1g-dev libssl-dev gperf php-cli cmake g++
+      - uses: actions/checkout@v3
 
-    - name: clone repository
-      run: rm -rf build && mkdir build && cd build
+      - name: echo path
+        run: pwd && ls -al ./
 
-    - name: Build
-     # Build your program with the given configuration
-      run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../tdlib .. && cmake --build . --target install
+      - name: sudo apt-get update
+        run: sudo apt-get update
 
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-     # Execute tests defined by the CMake configuration.
-     # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ls -l tdlib
+      - name: sudo apt-get upgrade
+        run: sudo apt-get upgrade
+
+      - name: sudo apt-get install make git zlib1g-dev libssl-dev gperf php-cli cmake g++
+        run: sudo apt-get install make git zlib1g-dev libssl-dev gperf php-cli cmake g++
+
+      - name: clone repository
+        run: rm -rf build && mkdir build && cd build
+
+      - name: Build
+        # Build your program with the given configuration
+        run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../tdlib .. && cmake --build . --target install
+
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        # Execute tests defined by the CMake configuration.
+        # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+        run: ls -l tdlib
 
